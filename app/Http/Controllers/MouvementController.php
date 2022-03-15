@@ -14,7 +14,7 @@ class MouvementController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Mouvement::all());
     }
 
     /**
@@ -25,7 +25,18 @@ class MouvementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'description' => 'required',
+            'montant' => 'required|numeric',
+            'date_mouvement' => 'required|date',
+            'solde_intermediaire' => 'required|numeric',
+            'user_id' => 'required',
+            'ressource_id' => 'required',
+            'type_mouvement_id' => 'required',
+        ]);
+
+        Mouvement::create($data);
+        return response()->json();
     }
 
     /**
@@ -48,7 +59,16 @@ class MouvementController extends Controller
      */
     public function update(Request $request, Mouvement $mouvement)
     {
-        //
+        $data = $request->validate([
+            'description' => 'required',
+            'montant' => 'required|numeric',
+            'date_mouvement' => 'required|date',
+            'solde_intermediaire' => 'required|numeric',
+            'user_id' => 'required',
+            'ressource_id' => 'required',
+            'type_mouvement_id' => 'required',
+        ]);
+        $mouvement->update($data);
     }
 
     /**
@@ -59,6 +79,6 @@ class MouvementController extends Controller
      */
     public function destroy(Mouvement $mouvement)
     {
-        //
+        $mouvement->delete();
     }
 }
