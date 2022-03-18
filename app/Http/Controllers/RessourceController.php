@@ -14,7 +14,7 @@ class RessourceController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Ressource::all());
     }
 
     /**
@@ -25,7 +25,18 @@ class RessourceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nom_ressource' => 'required',
+            'solde' => 'required|numeric',
+            'type_ressources_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        Ressource::create($data);
+
+        return response()->json([
+            'success' => 'Ressource a bien était crée'
+        ]);
     }
 
     /**
@@ -48,7 +59,17 @@ class RessourceController extends Controller
      */
     public function update(Request $request, Ressource $ressource)
     {
-        //
+        $data = $request->validate([
+            'nom_ressource' => 'required',
+            'solde' => 'required|numeric',
+            'type_ressources_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $ressource->update($data);
+        return response()->json([
+            'success' => 'Ressource a bien était mise a jour'
+        ]);
     }
 
     /**
@@ -59,6 +80,9 @@ class RessourceController extends Controller
      */
     public function destroy(Ressource $ressource)
     {
-        //
+        $ressource->delete();
+        return response()->json([
+            'success' => 'Ressource a bien était supprimer'
+        ]);
     }
 }

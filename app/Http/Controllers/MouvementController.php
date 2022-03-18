@@ -36,7 +36,9 @@ class MouvementController extends Controller
         ]);
 
         Mouvement::create($data);
-        return response()->json();
+        return response()->json([
+            'success' => 'Mouvement a bien était crée'
+        ]);
     }
 
     /**
@@ -69,6 +71,9 @@ class MouvementController extends Controller
             'type_mouvement_id' => 'required',
         ]);
         $mouvement->update($data);
+        return response()->json([
+            'success' => 'Mouvement a bien était mise a jour'
+        ]);
     }
 
     /**
@@ -80,5 +85,8 @@ class MouvementController extends Controller
     public function destroy(Mouvement $mouvement)
     {
         $mouvement->delete();
+        return response()->json([
+            'success' => 'Mouvement a bien était supprimer'
+        ]);
     }
 }
