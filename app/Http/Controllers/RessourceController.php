@@ -47,8 +47,13 @@ class RessourceController extends Controller
      */
     public function show(Ressource $ressource)
     {
-        //
     }
+
+    public function showperuser($id)
+    {
+        return response()->json(Ressource::whereUserId($id)->get());
+    }
+
 
     /**
      * Update the specified resource in storage.

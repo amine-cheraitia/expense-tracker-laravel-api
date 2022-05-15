@@ -23,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('/mouvement', MouvementController::class);
 Route::apiResource('/ressource', RessourceController::class);
+Route::get('/ressource/user/{id}', [RessourceController::class, 'showperuser']);
