@@ -14,7 +14,7 @@ class MouvementController extends Controller
      */
     public function index()
     {
-        return response()->json(Mouvement::all());
+        return response()->json(Mouvement::orderBy('created_at')->get());
     }
 
     /**
