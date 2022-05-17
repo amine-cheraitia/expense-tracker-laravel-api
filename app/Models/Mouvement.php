@@ -8,6 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Mouvement extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'description',
+        'montant',
+        'date_mouvement',
+        'solde_intermediaire',
+        'user_id',
+        'ressource_id',
+        'type_mouvement_id',
+
+
+    ];
+
     /**
      * Get the user that owns the Mouvement
      *
