@@ -89,4 +89,13 @@ class MouvementController extends Controller
             'success' => 'Mouvement a bien était supprimer'
         ]);
     }
+
+    public function TotalEntreSortie($id)
+    {
+
+        return response()->json([
+            'entré' => Mouvement::whereUserId($id)->where('type_mouvement_id', 1)->sum('montant'),
+            'sortie' => Mouvement::whereUserId($id)->where('type_mouvement_id', 2)->sum('montant'),
+        ]);
+    }
 }
