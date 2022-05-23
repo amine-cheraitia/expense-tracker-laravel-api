@@ -49,7 +49,7 @@ class MouvementController extends Controller
      */
     public function show(Mouvement $mouvement)
     {
-        //
+        return response()->json(Mouvement::whereId($mouvement->id)->first());
     }
 
     /**
