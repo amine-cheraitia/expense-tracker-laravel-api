@@ -65,7 +65,7 @@ class MouvementController extends Controller
             'description' => 'required',
             'montant' => 'required|numeric',
             'date_mouvement' => 'required|date',
-            'solde_intermediaire' => 'required|numeric',
+            /*  'solde_intermediaire' => 'required|numeric', */
             'user_id' => 'required',
             'ressource_id' => 'required',
             'type_mouvement_id' => 'required',
