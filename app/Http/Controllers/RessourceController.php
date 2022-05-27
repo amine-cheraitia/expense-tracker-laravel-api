@@ -28,6 +28,7 @@ class RessourceController extends Controller
         $data = $request->validate([
             'nom_ressource' => 'required',
             'solde' => 'required|numeric',
+            'num_compte' => 'nullable',
             'type_ressources_id' => 'required',
             'user_id' => 'required',
         ]);
