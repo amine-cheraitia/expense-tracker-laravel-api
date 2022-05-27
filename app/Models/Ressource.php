@@ -9,6 +9,19 @@ class Ressource extends Model
 {
     use HasFactory;
 
+
+
+    protected $fillable = [
+        'num_compte',
+        'nom_ressource',
+        'solde',
+        'num_compte',
+        'type_ressources_id',
+        'user_id',
+
+
+
+    ];
     /**
      * Get all of the comments for the Ressource
      *
