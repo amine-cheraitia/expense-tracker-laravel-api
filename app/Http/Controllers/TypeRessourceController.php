@@ -14,7 +14,7 @@ class TypeRessourceController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Type_Ressource::all());
     }
 
     /**
