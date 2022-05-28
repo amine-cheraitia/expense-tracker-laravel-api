@@ -69,6 +69,7 @@ class RessourceController extends Controller
             'nom_ressource' => 'required',
             'solde' => 'required|numeric',
             'type_ressources_id' => 'required',
+            'num_compte' => 'nullable',
             'user_id' => 'required',
         ]);
 
