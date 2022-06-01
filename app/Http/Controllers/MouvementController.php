@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mouvement;
+use App\Models\Ressource;
 use Illuminate\Http\Request;
 
 class MouvementController extends Controller
@@ -34,11 +35,23 @@ class MouvementController extends Controller
             'ressource_id' => 'required',
             'type_mouvement_id' => 'required',
         ]);
+        /* update solde  */
+        $ressource = Ressource::whereId($request->ressource_id)->first();
+        if ($ressource->solde < $request->montant) {
+            return response()->json([
+                'errors' => 'le solde de la ressource choisi ne suffit pas pour effectuer cette opération',
+                'solde' => 'errors'
+            ], 422);
+        } else {
 
-        Mouvement::create($data);
-        return response()->json([
-            'success' => 'Mouvement a bien était crée'
-        ]);
+            $newSolde =  $ressource->solde - $request->montant;
+            $ressource->update(['solde' => $newSolde]);
+
+            Mouvement::create($data);
+            return response()->json([
+                'success' => 'Mouvement a bien était crée'
+            ]);
+        }
     }
 
     /**
