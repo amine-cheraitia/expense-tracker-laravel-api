@@ -37,12 +37,16 @@ class MouvementController extends Controller
         ]);
         /* update solde  */
         $ressource = Ressource::whereId($request->ressource_id)->first();
+
         if ($ressource->solde < $request->montant) {
             return response()->json([
                 'errors' => 'le solde de la ressource choisi ne suffit pas pour effectuer cette opération',
                 'solde' => 'errors'
             ], 422);
         } else {
+
+            /* TODO check le type de mouvement  pour up rajouté le montant ou le soustraire*/
+            /* if($ressource->) */
 
             $newSolde =  $ressource->solde - $request->montant;
             $ressource->update(['solde' => $newSolde]);
