@@ -35,20 +35,24 @@ class MouvementController extends Controller
             'ressource_id' => 'required',
             'type_mouvement_id' => 'required',
         ]);
-        /* update solde  */
+
         $ressource = Ressource::whereId($request->ressource_id)->first();
 
-        if ($ressource->solde < $request->montant) {
+        if (($ressource->solde < $request->montant) && ($request->type_mouvement_id == 2)) {
             return response()->json([
                 'errors' => 'le solde de la ressource choisi ne suffit pas pour effectuer cette opération',
                 'solde' => 'errors'
             ], 422);
         } else {
 
-            /* TODO check le type de mouvement  pour up rajouté le montant ou le soustraire*/
-            /* if($ressource->) */
+            /* calculer nouveau montant du solde de la ressource après l'ajout d'un mouvement et l'update*/
+            if ($request->type_mouvement_id == 1) {
+                $newSolde =  $ressource->solde + $request->montant;
+            } else {
+                $newSolde =  $ressource->solde - $request->montant;
+            }
 
-            $newSolde =  $ressource->solde - $request->montant;
+
             $ressource->update(['solde' => $newSolde]);
 
             Mouvement::create($data);
@@ -101,7 +105,17 @@ class MouvementController extends Controller
      */
     public function destroy(Mouvement $mouvement)
     {
+        $ressource = Ressource::whereId($mouvement->ressource_id)->first();
+
+
+        if ($mouvement->type_mouvement_id === 1) {
+            $solde = $ressource->solde - $mouvement->montant;
+        } else {
+            $solde = $ressource->solde + $mouvement->montant;
+        }
+
         $mouvement->delete();
+        $ressource->update(['solde' => $solde]);
         return response()->json([
             'success' => 'Mouvement a bien était supprimer'
         ]);
