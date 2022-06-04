@@ -91,10 +91,103 @@ class MouvementController extends Controller
             'ressource_id' => 'required',
             'type_mouvement_id' => 'required',
         ]);
-        $mouvement->update($data);
+
+        $ressource = Ressource::whereId($request->ressource_id)->first();
+        $solde = $ressource->solde;
+        $oldMontant = $mouvement->montant;
+        $newMontant = $request->montant;
+
+        if ($request->type_mouvement_id == 2) {
+            if ($mouvement->type_mouvement_id == 1) {
+                if (($solde - $oldMontant) < $newMontant) {
+                    return response()->json([
+                        'errors' => 'le solde de la ressource choisi ne suffit pas pour effectuer cette opération',
+                        'solde' => 'errors'
+                    ], 422);
+                } else {
+                    $newSolde = $solde - $oldMontant - $newMontant;
+
+                    $ressource->update(['solde' => $newSolde]);
+                    $mouvement->update($data);
+                    return response()->json([
+                        'success' => 'Mouvement a bien était mise a jour'
+                    ]);
+                }
+            } elseif ($mouvement->type_mouvement_id == 2) {
+                if (($solde + $oldMontant) < $newMontant) {
+                    return response()->json([
+                        'errors' => 'le solde de la ressource choisi ne suffit pas pour effectuer cette opération',
+                        'solde' => 'errors'
+                    ], 422);
+                } else {
+                    $newSolde = $solde + $oldMontant - $newMontant;
+
+                    $ressource->update(['solde' => $newSolde]);
+                    $mouvement->update($data);
+                    return response()->json([
+                        'success' => 'Mouvement a bien était mise a jour'
+                    ]);
+                }
+            }
+        } elseif ($request->type_mouvement_id = 1) {
+            if ($mouvement->type_mouvement_id == 1) {
+                $newSolde = $solde - $oldMontant + $newMontant;
+                $ressource->update(['solde' => $newSolde]);
+                $mouvement->update($data);
+                return response()->json([
+                    'success' => 'Mouvement a bien était mise a jour'
+                ]);
+            } elseif ($mouvement->type_mouvement_id == 2) {
+                $newSolde = $solde + $oldMontant + $newMontant;
+                $ressource->update(['solde' => $newSolde]);
+                $mouvement->update($data);
+                return response()->json([
+                    'success' => 'Mouvement a bien était mise a jour'
+                ]);
+            }
+        }
+
+
+        /*
+
+               // /* check le type
+        // calcule new solde
+        $ressource = Ressource::whereId($request->ressource_id)->first('solde');
+
+        if ($mouvement->type_mouvement_id == 2) {
+            $solde = $ressource + $mouvement->montant;
+        } elseif ($mouvement->type_mouvement_id == 1) {
+            $solde = $ressource - $mouvement->montant;
+        }
+
+
+
+        if (($request->type_mouvement_id == 2) && ($solde < $request->montant)) {
+             calcule du solde
+            return response()->json([
+                'errors' => 'le solde de la ressource choisi ne suffit pas pour effectuer cette opération',
+                'solde' => 'errors'
+            ], 422);
+        } else {
+             calculer nouveau montant du solde de la ressource après l'ajout d'un mouvement et l'update
+            if ($request->type_mouvement_id == 1) {
+                $newSolde =  $ressource->solde + $request->montant;
+            } else {
+                $newSolde =  $ressource->solde - $request->montant;
+            }
+            $ressource->update(['solde' => $newSolde]);
+
+            $mouvement->update($data);
+            return response()->json([
+                'success' => 'Mouvement a bien était mise a jour'
+            ]);
+        }
+
+  */
+        /*         $mouvement->update($data);
         return response()->json([
             'success' => 'Mouvement a bien était mise a jour'
-        ]);
+        ]); */
     }
 
     /**
