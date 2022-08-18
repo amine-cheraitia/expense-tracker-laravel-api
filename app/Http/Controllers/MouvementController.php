@@ -110,7 +110,7 @@ class MouvementController extends Controller
                     $ressource->update(['solde' => $newSolde]);
                     $mouvement->update($data);
                     return response()->json([
-                        'success' => 'Mouvement a bien était mise a jour'
+                        'success' => 'Mouvement a bien était mise à jour'
                     ]);
                 }
             } elseif ($mouvement->type_mouvement_id == 2) {
@@ -125,7 +125,7 @@ class MouvementController extends Controller
                     $ressource->update(['solde' => $newSolde]);
                     $mouvement->update($data);
                     return response()->json([
-                        'success' => 'Mouvement a bien était mise a jour'
+                        'success' => 'Mouvement a bien était mise à jour'
                     ]);
                 }
             }
