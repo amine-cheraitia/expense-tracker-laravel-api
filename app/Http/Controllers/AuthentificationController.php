@@ -22,20 +22,11 @@ class AuthentificationController extends Controller
                 return response()->json([
                     'token' => $user->createToken(time())->plainTextToken
                 ]);
-            } else {
-                return response()->json([
-                    "message" => "mot de passe eronner $user"
-                ], 401);
             }
-        } else {
-            return response()->json([
-                "message" => "Email eronner $user"
-            ], 401);
         }
-
-        /*         return response()->json([
+        return response()->json([
             "message" => "Email ou mot de passe éronné"
-        ], 401); */
+        ], 401);
     }
 
     public function logout(Request $request)
