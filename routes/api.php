@@ -27,3 +27,7 @@ Route::apiResource('/ressource', RessourceController::class);
 Route::apiResource('/typeressource', TypeRessourceController::class);
 Route::get('/ressource/user/{id}', [RessourceController::class, 'showperuser']);
 Route::get('/ressourcetotal/user/{id}', [MouvementController::class, 'TotalEntreSortie']);
+
+Route::post('/login', [AuthentificationController::class, 'login']);
+Route::post('/logout', [AuthentificationController::class, 'logout']);
+Route::post('/create', [AuthentificationController::class, 'create']);
