@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MouvementController;
 use App\Http\Controllers\RessourceController;
 use App\Http\Controllers\TypeRessourceController;
+use App\Http\Controllers\AuthentificationController;
+
 
 /*
 |--------------------------------------------------------------------------
