@@ -20,7 +20,8 @@ class AuthentificationController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 return response()->json([
-                    'token' => $user->createToken(time())->plainTextToken
+                    'token' => $user->createToken(time())->plainTextToken,
+                    'user'=> $user
                 ]);
             }
         }
