@@ -21,7 +21,7 @@ class AuthentificationController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 return response()->json([
                     'token' => $user->createToken(time())->plainTextToken,
-                    'user'=> $user
+                    'user' => $user
                 ]);
             }
         }
@@ -36,5 +36,24 @@ class AuthentificationController extends Controller
         return response()->json([
             'message' => 'ok'
         ]);
+    }
+
+    public function checkToken(Request $request)
+    {
+        try {
+            $user = User::whereEmail($request->email)->first();
+            /*             if ($$user) {
+                return response()->json([
+                    'message' => 'ok'
+                ]);
+            } */
+            return response()->json([
+                'message' => 'ok'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => "token n'existe plus"
+            ], 401);
+        }
     }
 }
