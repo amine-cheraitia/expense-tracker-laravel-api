@@ -10,7 +10,17 @@ class AuthentificationController extends Controller
 {
     public function create(Request $request)
     {
-        # code...
+        $user = $request->validate([
+            "name" => 'required',
+            "password" => 'required|confirmed',
+            "email" => 'email|required'
+        ]);
+
+        User::create([
+            "name" => $request->nom,
+            "password" => Hash::make($request->password),
+            "name" => $request->email
+        ]);
     }
 
     public function login(Request $request)
