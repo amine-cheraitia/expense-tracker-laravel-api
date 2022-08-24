@@ -17,10 +17,12 @@ class AuthentificationController extends Controller
         ]);
 
         User::create([
-            "name" => $request->nom,
+            "name" => $request->name,
             "password" => Hash::make($request->password),
-            "name" => $request->email
+            "email" => $request->email
         ]);
+
+        $this->login($request);
     }
 
     public function login(Request $request)
