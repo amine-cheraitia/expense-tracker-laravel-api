@@ -222,7 +222,7 @@ class MouvementController extends Controller
             'sortie' => Mouvement::whereUserId($id)->where('type_mouvement_id', 2)->sum('montant'),
         ]);
     }
-    public function showUserMouvement(Request $userId)
+    public function showUserMouvement($userId)
     {
 
         return response()->json(Mouvement::whereUserId($userId)->orderBy('created_at')->get());
