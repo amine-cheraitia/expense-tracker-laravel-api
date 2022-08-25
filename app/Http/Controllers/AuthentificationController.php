@@ -10,7 +10,7 @@ class AuthentificationController extends Controller
 {
     public function create(Request $request)
     {
-        $user = $request->validate([
+        $request->validate([
             "name" => 'required',
             "password" => 'required|confirmed',
             "email" => 'email|required'
@@ -22,7 +22,7 @@ class AuthentificationController extends Controller
             "email" => $request->email
         ]);
 
-        $this->login($request);
+        return $this->login($request);
     }
 
     public function login(Request $request)
