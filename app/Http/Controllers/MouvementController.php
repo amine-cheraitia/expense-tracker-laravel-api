@@ -225,6 +225,6 @@ class MouvementController extends Controller
     public function showUserMouvement($userId)
     {
 
-        return response()->json(Mouvement::whereUserId($userId)->orderBy('created_at')->get());
+        return response()->json(Mouvement::whereUserId($userId)->orderBy('date_mouvement', 'desc')->get());
     }
 }
