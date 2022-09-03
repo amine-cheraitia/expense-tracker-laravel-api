@@ -227,4 +227,18 @@ class MouvementController extends Controller
 
         return response()->json(Mouvement::whereUserId($userId)->orderBy('date_mouvement', 'desc')->get());
     }
+
+    public function kpi($id)
+    {
+        $mouvement = Mouvement::selectRaw(' MONTH(date_mouvement) AS m, SUM(CASE WHEN type_mouvement_id = 1 THEN montant ELSE 0  END) AS recette, SUM(CASE WHEN type_mouvement_id = 2 THEN montant ELSE 0  END) AS depense')
+            ->where('user_id', $id)
+            ->whereYear('date_mouvement',  date('Y'))
+            ->groupBy('m')
+            ->orderBy('m', 'asc')
+            ->get();
+
+        return response()->json([
+            $mouvement
+        ]);
+    }
 }
