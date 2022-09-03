@@ -22,9 +22,9 @@ use App\Http\Controllers\AuthentificationController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
+Route::get('/mouvement/kpi/{id}', [MouvementController::class, 'kpi'])/* ->middleware('auth:sanctum') */;
 Route::get('/mouvement/user/{id}', [MouvementController::class, 'showUserMouvement'])->middleware('auth:sanctum');
-Route::apiResource('/mouvement', MouvementController::class)->middleware('auth:sanctum');
+Route::apiResource('/mouvement', MouvementController::class)/* ->middleware('auth:sanctum') */;
 
 
 Route::apiResource('/ressource', RessourceController::class)->middleware('auth:sanctum');
