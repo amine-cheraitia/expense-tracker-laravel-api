@@ -230,15 +230,24 @@ class MouvementController extends Controller
 
     public function kpi($id)
     {
-        $mouvement = Mouvement::selectRaw(' MONTH(date_mouvement) AS m, SUM(CASE WHEN type_mouvement_id = 1 THEN montant ELSE 0  END) AS recette, SUM(CASE WHEN type_mouvement_id = 2 THEN montant ELSE 0  END) AS depense')
+        $mouvementMonthly = Mouvement::selectRaw(' MONTH(date_mouvement) AS m, SUM(CASE WHEN type_mouvement_id = 1 THEN montant ELSE 0  END) AS recette, SUM(CASE WHEN type_mouvement_id = 2 THEN montant ELSE 0  END) AS depense')
             ->where('user_id', $id)
             ->whereYear('date_mouvement',  date('Y'))
             ->groupBy('m')
             ->orderBy('m', 'asc')
             ->get();
+        $firstYear = date('Y') - 4;
+        $lastYear = date('Y') + 2;
+        $mouvementYearly = Mouvement::selectRaw(" YEAR(date_mouvement) AS y, SUM(CASE WHEN type_mouvement_id = 1 THEN montant ELSE 0  END) AS recette, SUM(CASE WHEN type_mouvement_id = 2 THEN montant ELSE 0  END) AS depense")
+            ->where('user_id', $id)
+            ->whereYear('date_mouvement', '>=', $firstYear)
+            ->groupBy('y')
+            ->orderBy('y', 'asc')
+            ->get();
 
         return response()->json([
-            $mouvement
+            $mouvementMonthly,
+            $mouvementYearly
         ]);
     }
 }
